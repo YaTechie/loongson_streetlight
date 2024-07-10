@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ZInspectionMapper">
+    
+    <resultMap type="ZInspection" id="ZInspectionResult">
+        <result property="id"    column="id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="status"    column="status"    />
+        <result property="userId"    column="user_id"    />
+        <result property="inspectionName"    column="Inspection_name"    />
+        <result property="method"    column="method"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectZInspectionVo">
+        select id, device_id, status, user_id, Inspection_name, method, create_by, create_time, update_by, update_time, remark from z_inspection
+    </sql>
+
+    <select id="selectZInspectionList" parameterType="ZInspection" resultMap="ZInspectionResult">
+        <include refid="selectZInspectionVo"/>
+        <where>  
+            <if test="deviceId != null  and deviceId != ''"> and device_id = #{deviceId}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="inspectionName != null  and inspectionName != ''"> and Inspection_name like concat('%', #{inspectionName}, '%')</if>
+            <if test="method != null  and method != ''"> and method = #{method}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+        </where>
+    </select>
+    
+    <select id="selectZInspectionById" parameterType="Long" resultMap="ZInspectionResult">
+        <include refid="selectZInspectionVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertZInspection" parameterType="ZInspection">
+        insert into z_inspection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="deviceId != null and deviceId != ''">device_id,</if>
+            <if test="status != null">status,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="inspectionName != null and inspectionName != ''">Inspection_name,</if>
+            <if test="method != null and method != ''">method,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="deviceId != null and deviceId != ''">#{deviceId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="inspectionName != null and inspectionName != ''">#{inspectionName},</if>
+            <if test="method != null and method != ''">#{method},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZInspection" parameterType="ZInspection">
+        update z_inspection
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceId != null and deviceId != ''">device_id = #{deviceId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="inspectionName != null and inspectionName != ''">Inspection_name = #{inspectionName},</if>
+            <if test="method != null and method != ''">method = #{method},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteZInspectionById" parameterType="Long">
+        delete from z_inspection where id = #{id}
+    </delete>
+
+    <delete id="deleteZInspectionByIds" parameterType="String">
+        delete from z_inspection where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

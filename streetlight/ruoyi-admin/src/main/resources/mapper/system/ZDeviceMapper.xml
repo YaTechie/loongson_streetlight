@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ZDeviceMapper">
+    
+    <resultMap type="ZDevice" id="ZDeviceResult">
+        <result property="id"    column="id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="name"    column="name"    />
+        <result property="online"    column="online"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="percent"    column="percent"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="windspeed"    column="windspeed"    />
+        <result property="direction"    column="direction"    />
+        <result property="angle"    column="angle"    />
+        <result property="sensorLight"    column="sensor_light"    />
+        <result property="sensorHumidity"    column="sensor_humidity"    />
+        <result property="sensorTemperature"    column="sensor_temperature"    />
+        <result property="sensorPwm"    column="sensor_pwm"    />
+        <result property="sensorPm2"    column="sensor_pm2"    />
+    </resultMap>
+
+    <sql id="selectZDeviceVo">
+        select id, device_id, name, online, create_by, create_time, update_by, update_time, remark, percent, latitude, longitude, windspeed, direction, angle, sensor_light, sensor_humidity, sensor_temperature, sensor_pwm, sensor_pm2 from z_device
+    </sql>
+
+    <select id="selectZDeviceList" parameterType="ZDevice" resultMap="ZDeviceResult">
+        <include refid="selectZDeviceVo"/>
+        <where>  
+            <if test="deviceId != null  and deviceId != ''"> and device_id = #{deviceId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="online != null "> and online = #{online}</if>
+            <if test="latitude != null "> and latitude = #{latitude}</if>
+            <if test="longitude != null "> and longitude = #{longitude}</if>
+            <if test="windspeed != null "> and windspeed = #{windspeed}</if>
+            <if test="direction != null  and direction != ''"> and direction = #{direction}</if>
+            <if test="angle != null "> and angle = #{angle}</if>
+            <if test="sensorLight != null "> and sensor_light = #{sensorLight}</if>
+            <if test="sensorHumidity != null "> and sensor_humidity = #{sensorHumidity}</if>
+            <if test="sensorTemperature != null "> and sensor_temperature = #{sensorTemperature}</if>
+            <if test="sensorPwm != null "> and sensor_pwm = #{sensorPwm}</if>
+            <if test="sensorPm2 != null "> and sensor_pm2 = #{sensorPm2}</if>
+        </where>
+    </select>
+    
+    <select id="selectZDeviceById" parameterType="Long" resultMap="ZDeviceResult">
+        <include refid="selectZDeviceVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertZDevice" parameterType="ZDevice" useGeneratedKeys="true" keyProperty="id">
+        insert into z_device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">device_id,</if>
+            <if test="name != null">name,</if>
+            <if test="online != null">online,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="percent != null">percent,</if>
+            <if test="latitude != null">latitude,</if>
+            <if test="longitude != null">longitude,</if>
+            <if test="windspeed != null">windspeed,</if>
+            <if test="direction != null">direction,</if>
+            <if test="angle != null">angle,</if>
+            <if test="sensorLight != null">sensor_light,</if>
+            <if test="sensorHumidity != null">sensor_humidity,</if>
+            <if test="sensorTemperature != null">sensor_temperature,</if>
+            <if test="sensorPwm != null">sensor_pwm,</if>
+            <if test="sensorPm2 != null">sensor_pm2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">#{deviceId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="online != null">#{online},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="percent != null">#{percent},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="windspeed != null">#{windspeed},</if>
+            <if test="direction != null">#{direction},</if>
+            <if test="angle != null">#{angle},</if>
+            <if test="sensorLight != null">#{sensorLight},</if>
+            <if test="sensorHumidity != null">#{sensorHumidity},</if>
+            <if test="sensorTemperature != null">#{sensorTemperature},</if>
+            <if test="sensorPwm != null">#{sensorPwm},</if>
+            <if test="sensorPm2 != null">#{sensorPm2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateZDevice" parameterType="ZDevice">
+        update z_device
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceId != null">device_id = #{deviceId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="online != null">online = #{online},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="percent != null">percent = #{percent},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+            <if test="windspeed != null">windspeed = #{windspeed},</if>
+            <if test="direction != null">direction = #{direction},</if>
+            <if test="angle != null">angle = #{angle},</if>
+            <if test="sensorLight != null">sensor_light = #{sensorLight},</if>
+            <if test="sensorHumidity != null">sensor_humidity = #{sensorHumidity},</if>
+            <if test="sensorTemperature != null">sensor_temperature = #{sensorTemperature},</if>
+            <if test="sensorPwm != null">sensor_pwm = #{sensorPwm},</if>
+            <if test="sensorPm2 != null">sensor_pm2 = #{sensorPm2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteZDeviceById" parameterType="Long">
+        delete from z_device where id = #{id}
+    </delete>
+
+    <delete id="deleteZDeviceByIds" parameterType="String">
+        delete from z_device where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
